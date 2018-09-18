@@ -34,7 +34,7 @@ class _CardWidgetContentState extends State<CardWidgetContent> {
   };
 
   final MaskedTextController _dateControler =
-      new MaskedTextController(mask: 'mm/yy', translator: dateTranslator);
+      new MaskedTextController(mask: 'm/y', translator: dateTranslator);
 
   bool _autovalidate = false;
   bool _error = false;
