@@ -1,0 +1,9 @@
+# paymentez_flutter
+
+A new Flutter package for add cards to paymentez
+
+## Getting Started
+
+For help getting started with Flutter, view our online [documentation](https://flutter.io/).
+
+For help on editing package code, view the [documentation](https://flutter.io/developing-packages/).
