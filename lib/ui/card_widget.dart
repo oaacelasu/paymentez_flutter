@@ -27,7 +27,7 @@ class _CardWidgetState extends State<CardWidget> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  var _numberIcon = Image.asset('assets/card_generic.png');
+  var _numberIcon = Image.asset('packages_assets/card_generic.png');
   var _cardBrand = CardBrands.UNKNOWN;
 
   @override
@@ -46,27 +46,27 @@ class _CardWidgetState extends State<CardWidget> {
           case CardBrands.MASTERCARD:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_mastercard.png');
+            _numberIcon = Image.asset('packages_assets/card_mastercard.png');
             break;
           case CardBrands.VISA:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_visa.png');
+            _numberIcon = Image.asset('packages_assets/card_visa.png');
             break;
           case CardBrands.AMERICAN_EXPRESS:
             _numberController.updateMask('0000 0000 0000 000');
             _cvvController.updateMask('0000');
-            _numberIcon = Image.asset('assets/card_amex.png');
+            _numberIcon = Image.asset('packages_assets/card_amex.png');
             break;
           case CardBrands.DINERS_CLUB:
             _numberController.updateMask('0000 0000 0000 00');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_diners.png');
+            _numberIcon = Image.asset('packages_assets/card_diners.png');
             break;
           default:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_generic.png');
+            _numberIcon = Image.asset('packages_assets/card_generic.png');
             break;
         }
         _numberController.selection =
