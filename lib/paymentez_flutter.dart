@@ -2,8 +2,74 @@ library paymentez_flutter;
 
 export 'ui/card_widget.dart';
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
+// Based on http://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29
+final List _CARDBRAND_IDENTIFIER_LIST = [
+  {"RegExp": new RegExp(r'^3(4|7)'), "CardBrands": CardBrands.AMERICAN_EXPRESS},
+  {
+    "RegExp": new RegExp(r'^6(0|4|5)(1|4)?(1)?'),
+    "CardBrands": CardBrands.DISCOVER
+  },
+  {"RegExp": new RegExp(r'^35'), "CardBrands": CardBrands.JCB},
+  {
+    "RegExp": new RegExp(r'^30([0-5]|9)|3(6|8|9)'),
+    "CardBrands": CardBrands.DINERS_CLUB
+  },
+  {"RegExp": new RegExp(r'^4'), "CardBrands": CardBrands.VISA},
+  {
+    "RegExp": new RegExp(r'^5[1-5]|2[3-6]|27(0|1|20)|22[3-9]|222[1-9]'),
+    "CardBrands": CardBrands.MASTERCARD
+  },
+];
+const int MAX_LENGTH_STANDARD = 16;
+const int MAX_LENGTH_AMERICAN_EXPRESS = 15;
+const int MAX_LENGTH_DINERS_CLUB = 14;
+
+class CardBrands {
+  final _value;
+  const CardBrands._internal(this._value);
+  toString() => '$_value';
+  toJson() => '$_value';
+
+  static const AMERICAN_EXPRESS = const CardBrands._internal('ax');
+  static const DISCOVER = const CardBrands._internal('dc');
+  static const JCB = const CardBrands._internal('jc');
+  static const DINERS_CLUB = const CardBrands._internal('di');
+  static const VISA = const CardBrands._internal('vi');
+  static const MASTERCARD = const CardBrands._internal('mc');
+  static const UNKNOWN = const CardBrands._internal('unknown');
+}
+
+CardBrands getCardBrand(String number) {
+  CardBrands issuer = CardBrands.UNKNOWN;
+  var issuerID = number.substring(0, number.length > 6 ? 6 : number.length);
+  _CARDBRAND_IDENTIFIER_LIST.forEach((item) {
+    if (item["RegExp"].hasMatch(issuerID)) {
+      issuer = item["CardBrands"];
+    }
+  });
+  return issuer;
+}
+
+bool validateNumberCard(luhn) {
+  luhn = luhn.toString().replaceAll(' ', '');
+  var luhnDigit =
+      int.parse(luhn.substring(luhn.length - 1, luhn.length), radix: 10);
+  var luhnLess = luhn.substring(0, luhn.length - 1);
+  return (_calculate(luhnLess) == luhnDigit);
+}
+
+int _calculate(luhn) {
+  luhn = luhn.toString().replaceAll(' ', '');
+  var sum = luhn
+      .split("")
+      .map((e) => int.parse(e, radix: 10))
+      .reduce((a, b) => a + b);
+
+  var delta = [0, 1, 2, 3, 4, -4, -3, -2, -1, 0];
+  for (var i = luhn.length - 1; i >= 0; i -= 2) {
+    sum += delta[int.parse(luhn.substring(i, i + 1), radix: 10)];
+  }
+
+  var mod10 = 10 - (sum % 10);
+  return mod10 == 10 ? 0 : mod10;
 }
