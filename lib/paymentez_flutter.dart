@@ -1,5 +1,7 @@
 library paymentez_flutter;
 
+import 'dart:convert';
+
 export 'ui/card_widget.dart';
 
 // Based on http://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29
@@ -20,9 +22,6 @@ final List _CARDBRAND_IDENTIFIER_LIST = [
     "CardBrands": CardBrands.MASTERCARD
   },
 ];
-const int MAX_LENGTH_STANDARD = 16;
-const int MAX_LENGTH_AMERICAN_EXPRESS = 15;
-const int MAX_LENGTH_DINERS_CLUB = 14;
 
 class CardBrands {
   final _value;
@@ -39,37 +38,60 @@ class CardBrands {
   static const UNKNOWN = const CardBrands._internal('unknown');
 }
 
-CardBrands getCardBrand(String number) {
-  CardBrands issuer = CardBrands.UNKNOWN;
-  var issuerID = number.substring(0, number.length > 6 ? 6 : number.length);
-  _CARDBRAND_IDENTIFIER_LIST.forEach((item) {
-    if (item["RegExp"].hasMatch(issuerID)) {
-      issuer = item["CardBrands"];
-    }
-  });
-  return issuer;
-}
 
-bool validateNumberCard(luhn) {
-  luhn = luhn.toString().replaceAll(' ', '');
-  var luhnDigit =
-      int.parse(luhn.substring(luhn.length - 1, luhn.length), radix: 10);
-  var luhnLess = luhn.substring(0, luhn.length - 1);
-  return (_calculate(luhnLess) == luhnDigit);
-}
+class PaymentezUtils {
+  static const String SERVER_DEV_URL = "https://ccapi-stg.paymentez.com";
+  static const String SERVER_PROD_URL = "https://ccapi.paymentez.com";
 
-int _calculate(luhn) {
-  luhn = luhn.toString().replaceAll(' ', '');
-  var sum = luhn
-      .split("")
-      .map((e) => int.parse(e, radix: 10))
-      .reduce((a, b) => a + b);
-
-  var delta = [0, 1, 2, 3, 4, -4, -3, -2, -1, 0];
-  for (var i = luhn.length - 1; i >= 0; i -= 2) {
-    sum += delta[int.parse(luhn.substring(i, i + 1), radix: 10)];
+  static String _getUniqToken(String auth_timestamp, String paymentez_client_app_key) {
+    String uniq_token_string = paymentez_client_app_key + auth_timestamp;
+    return uniq_token_string.hashCode.toString();
   }
 
-  var mod10 = 10 - (sum % 10);
-  return mod10 == 10 ? 0 : mod10;
+  static String getAuthToken(String paymentez_client_app_code, String app_client_key) {
+    String auth_timestamp = "${DateTime.now().millisecondsSinceEpoch}";
+    String string_auth_token = paymentez_client_app_code +
+        ";" +
+        auth_timestamp +
+        ";" +
+       _getUniqToken(auth_timestamp, app_client_key);
+    String auth_token = base64Encode(utf8.encode(string_auth_token));
+    return auth_token;
+  }
+
+  static CardBrands getCardBrand(String number) {
+    CardBrands issuer = CardBrands.UNKNOWN;
+    var issuerID = number.substring(0, number.length > 6 ? 6 : number.length);
+    _CARDBRAND_IDENTIFIER_LIST.forEach((item) {
+      if (item["RegExp"].hasMatch(issuerID)) {
+        issuer = item["CardBrands"];
+      }
+    });
+    return issuer;
+  }
+
+  static bool validateNumberCard(luhn) {
+    luhn = luhn.toString().replaceAll(' ', '');
+    var luhnDigit =
+    int.parse(luhn.substring(luhn.length - 1, luhn.length), radix: 10);
+    var luhnLess = luhn.substring(0, luhn.length - 1);
+    return (_calculate(luhnLess) == luhnDigit);
+  }
+
+  static int _calculate(luhn) {
+    luhn = luhn.toString().replaceAll(' ', '');
+    var sum = luhn
+        .split("")
+        .map((e) => int.parse(e, radix: 10))
+        .reduce((a, b) => a + b);
+
+    var delta = [0, 1, 2, 3, 4, -4, -3, -2, -1, 0];
+    for (var i = luhn.length - 1; i >= 0; i -= 2) {
+      sum += delta[int.parse(luhn.substring(i, i + 1), radix: 10)];
+    }
+
+    var mod10 = 10 - (sum % 10);
+    return mod10 == 10 ? 0 : mod10;
+  }
+
 }

@@ -40,7 +40,7 @@ class CardWidgetState extends State<CardWidget> {
     });
     _numberController.addListener(() {
       setState(() {
-        _cardBrand = getCardBrand(_numberController.text);
+        _cardBrand = PaymentezUtils.getCardBrand(_numberController.text);
         print(_cardBrand);
         switch (_cardBrand) {
           case CardBrands.MASTERCARD:
@@ -153,7 +153,7 @@ class CardWidgetState extends State<CardWidget> {
   String _validateNumber(String value) {
     if (_numberController.text.length < 10)
       return 'Ingresa un número de tarjeta de crédito válido';
-    else if (!validateNumberCard(_numberController.text))
+    else if (!PaymentezUtils.validateNumberCard(_numberController.text))
       return 'Ingresa un número de tarjeta de crédito válido';
     return null;
   }
