@@ -175,72 +175,53 @@ class CardWidgetState extends State<CardWidget> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: new BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: Colors.white,
-                        shape: BoxShape.rectangle,
-                        border: Border.all(style: BorderStyle.none)),
-                    child: TextFormField(
-                      key: _nameFieldKey,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        labelText:
-                            'Nombre del titular (igual que en la tarjeta)',
-                        hintText: 'Nombre del titular',
-                        labelStyle: Theme.of(context)
-                            .textTheme
-                            .body1
-                            .copyWith(color: Theme.of(context).hintColor),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 15.0),
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 1,
-                      validator: _validateName,
+                  child: TextFormField(
+                    key: _nameFieldKey,
+                    style: Theme.of(context).textTheme.title,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      labelText:
+                          'Nombre del titular (igual que en la tarjeta)',
+                      hintText: 'Nombre del titular',
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 15.0),
+                      border: const OutlineInputBorder(),
                     ),
+                    maxLines: 1,
+                    validator: _validateName,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                      decoration: new BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.white,
-                          shape: BoxShape.rectangle,
-                          border: Border.all(style: BorderStyle.none)),
-                      child: new TextFormField(
-                        key: _numberKey,
-                        autovalidate: _autovalidate,
-                        decoration: InputDecoration(
-                          prefixIcon: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            child: _numberIcon,
-                            width: 20.0,
-                          ),
-                          suffixIcon: _numberController.text.length > 0
-                              ? IconButton(
-                                  icon: Icon(Icons.clear),
-                                  onPressed: () {
-                                    setState(() {
-                                      _numberController.updateText('');
-                                    });
-                                  },
-                                )
-                              : null,
-                          labelText: 'Número de tarjeta',
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .body1
-                              .copyWith(color: Theme.of(context).hintColor),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 15.0),
-                          border: InputBorder.none,
-                        ),
-                        controller: _numberController,
-                        keyboardType: TextInputType.number,
-                        validator: _validateNumber,
-                      )),
+                  child: new TextFormField(
+                    key: _numberKey,
+                    style: Theme.of(context).textTheme.title,
+                    autovalidate: _autovalidate,
+                    decoration: InputDecoration(
+                      prefixIcon: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        child: _numberIcon,
+                        width: 20.0,
+                      ),
+                      suffixIcon: _numberController.text.length > 0
+                          ? IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                setState(() {
+                                  _numberController.updateText('');
+                                });
+                              },
+                            )
+                          : null,
+                      labelText: 'Número de tarjeta',
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 15.0),
+                      border: const OutlineInputBorder(),
+                    ),
+                    controller: _numberController,
+                    keyboardType: TextInputType.number,
+                    validator: _validateNumber,
+                  ),
                 ),
                 Row(
                   children: <Widget>[
