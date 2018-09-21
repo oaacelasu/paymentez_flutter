@@ -177,9 +177,10 @@ class CardWidgetState extends State<CardWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     key: _nameFieldKey,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.subhead,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.person),
                       labelText: 'Nombre del titular (igual que en la tarjeta)',
                       hintText: 'Nombre del titular',
                       contentPadding: EdgeInsets.symmetric(
@@ -194,7 +195,7 @@ class CardWidgetState extends State<CardWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: new TextFormField(
                     key: _numberKey,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.subhead,
                     autovalidate: _autovalidate,
                     decoration: InputDecoration(
                       prefixIcon: Container(
@@ -230,9 +231,10 @@ class CardWidgetState extends State<CardWidget> {
                         padding: const EdgeInsets.all(8.0),
                         child: new TextFormField(
                           key: _dateExpKey,
-                          style: Theme.of(context).textTheme.title,
+                          style: Theme.of(context).textTheme.subhead,
                           autovalidate: _autovalidate,
                           decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.calendar_today),
                             labelText: 'Fecha de vto',
                             hintText: 'MM/AA',
                             contentPadding: EdgeInsets.symmetric(
@@ -252,8 +254,9 @@ class CardWidgetState extends State<CardWidget> {
                         child: new TextFormField(
                           key: _cvvKey,
                           autovalidate: _autovalidate,
-                          style: Theme.of(context).textTheme.title,
+                          style: Theme.of(context).textTheme.subhead,
                           decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.https),
                             labelText: 'CVV',
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 15.0),
