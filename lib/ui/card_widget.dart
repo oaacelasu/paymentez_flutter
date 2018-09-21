@@ -10,10 +10,10 @@ class CardWidget extends StatefulWidget {
   final String title;
 
   @override
-  _CardWidgetState createState() => new _CardWidgetState();
+  CardWidgetState createState() => new CardWidgetState();
 }
 
-class _CardWidgetState extends State<CardWidget> {
+class CardWidgetState extends State<CardWidget> {
   MaskedTextController _numberController =
       new MaskedTextController(mask: '0000 0000 0000 0000');
   MaskedTextController _dateExpController =
@@ -79,7 +79,7 @@ class _CardWidgetState extends State<CardWidget> {
 
   bool _error = false;
 
-  bool _handleSubmitted() {
+  bool handleSubmitted() {
     final FormState form = _formKey.currentState;
     if (!form.validate()) {
       _autovalidate = true; // Start validating on every change.
@@ -297,35 +297,6 @@ class _CardWidgetState extends State<CardWidget> {
                   ],
                 ),
               ],
-            ),
-          ),
-          RaisedButton(
-            splashColor: Theme.of(context).primaryColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            onPressed: () {
-              if (_handleSubmitted()) {
-                print('enviada');
-                Map jsonMap = {
-                  "name": _nameFieldKey.currentState.value.toString(),
-                  "number": _numberKey.currentState.value.toString(),
-                  "monthExp":
-                      _dateExpKey.currentState.value.toString().split('/')[0],
-                  "yearExp": '20' +
-                      _dateExpKey.currentState.value.toString().split('/')[1],
-                  "cvv": _cvvKey.currentState.value.toString()
-                };
-                print(jsonMap);
-//              store.dispatch(AddCardAction(context, jsonMap));
-              } else {
-                print('error');
-              }
-            },
-            color: Colors.lightGreen,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Text('Siguiente',
-                  style: Theme.of(context).primaryTextTheme.body1),
             ),
           ),
         ],
