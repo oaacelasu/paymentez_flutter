@@ -180,8 +180,7 @@ class CardWidgetState extends State<CardWidget> {
                     style: Theme.of(context).textTheme.title,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                      labelText:
-                          'Nombre del titular (igual que en la tarjeta)',
+                      labelText: 'Nombre del titular (igual que en la tarjeta)',
                       hintText: 'Nombre del titular',
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 15.0),
@@ -229,61 +228,41 @@ class CardWidgetState extends State<CardWidget> {
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                            decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.white,
-                                shape: BoxShape.rectangle,
-                                border: Border.all(style: BorderStyle.none)),
-                            child: new TextFormField(
-                              key: _dateExpKey,
-                              autovalidate: _autovalidate,
-                              decoration: InputDecoration(
-                                labelText: 'Fecha de vto',
-                                hintText: 'MM/AA',
-                                labelStyle: Theme.of(context)
-                                    .textTheme
-                                    .body1
-                                    .copyWith(
-                                        color: Theme.of(context).hintColor),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 15.0),
-                                border: InputBorder.none,
-                              ),
-                              controller: _dateExpController,
-                              keyboardType: TextInputType.datetime,
-                              validator: _validateDate,
-                            )),
+                        child: new TextFormField(
+                          key: _dateExpKey,
+                          style: Theme.of(context).textTheme.title,
+                          autovalidate: _autovalidate,
+                          decoration: InputDecoration(
+                            labelText: 'Fecha de vto',
+                            hintText: 'MM/AA',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 15.0),
+                            border: const OutlineInputBorder(),
+                          ),
+                          controller: _dateExpController,
+                          keyboardType: TextInputType.datetime,
+                          validator: _validateDate,
+                        ),
                       ),
                     ),
                     Expanded(
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                            decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.white,
-                                shape: BoxShape.rectangle,
-                                border: Border.all(style: BorderStyle.none)),
-                            child: new TextFormField(
-                              key: _cvvKey,
-                              autovalidate: _autovalidate,
-                              decoration: InputDecoration(
-                                labelText: 'CVV',
-                                labelStyle: Theme.of(context)
-                                    .textTheme
-                                    .body1
-                                    .copyWith(
-                                        color: Theme.of(context).hintColor),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 15.0),
-                                border: InputBorder.none,
-                              ),
-                              controller: _cvvController,
-                              keyboardType: TextInputType.number,
-                              validator: _validateCVV,
-                            )),
+                        child: new TextFormField(
+                          key: _cvvKey,
+                          autovalidate: _autovalidate,
+                          style: Theme.of(context).textTheme.title,
+                          decoration: InputDecoration(
+                            labelText: 'CVV',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 15.0),
+                            border: const OutlineInputBorder(),
+                          ),
+                          controller: _cvvController,
+                          keyboardType: TextInputType.number,
+                          validator: _validateCVV,
+                        ),
                       ),
                     ),
                   ],
