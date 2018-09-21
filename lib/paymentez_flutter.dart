@@ -2,6 +2,8 @@ library paymentez_flutter;
 
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
+
 export 'ui/card_widget.dart';
 
 // Based on http://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29
@@ -38,23 +40,24 @@ class CardBrands {
   static const UNKNOWN = const CardBrands._internal('unknown');
 }
 
-
 class PaymentezUtils {
   static const String SERVER_DEV_URL = "https://ccapi-stg.paymentez.com";
   static const String SERVER_PROD_URL = "https://ccapi.paymentez.com";
 
-  static String _getUniqToken(String auth_timestamp, String paymentez_client_app_key) {
+  static String _getUniqToken(
+      String auth_timestamp, String paymentez_client_app_key) {
     String uniq_token_string = paymentez_client_app_key + auth_timestamp;
-    return uniq_token_string.hashCode.toString();
+    return sha256.convert(utf8.encode(uniq_token_string)).toString();
   }
 
-  static String getAuthToken(String paymentez_client_app_code, String app_client_key) {
+  static String getAuthToken(
+      String paymentez_client_app_code, String app_client_key) {
     String auth_timestamp = "${DateTime.now().millisecondsSinceEpoch}";
     String string_auth_token = paymentez_client_app_code +
         ";" +
         auth_timestamp +
         ";" +
-       _getUniqToken(auth_timestamp, app_client_key);
+        _getUniqToken(auth_timestamp, app_client_key);
     String auth_token = base64Encode(utf8.encode(string_auth_token));
     return auth_token;
   }
@@ -73,7 +76,7 @@ class PaymentezUtils {
   static bool validateNumberCard(luhn) {
     luhn = luhn.toString().replaceAll(' ', '');
     var luhnDigit =
-    int.parse(luhn.substring(luhn.length - 1, luhn.length), radix: 10);
+        int.parse(luhn.substring(luhn.length - 1, luhn.length), radix: 10);
     var luhnLess = luhn.substring(0, luhn.length - 1);
     return (_calculate(luhnLess) == luhnDigit);
   }
@@ -93,5 +96,4 @@ class PaymentezUtils {
     var mod10 = 10 - (sum % 10);
     return mod10 == 10 ? 0 : mod10;
   }
-
 }
