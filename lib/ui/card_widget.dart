@@ -97,6 +97,17 @@ class CardWidgetState extends State<CardWidget> {
     }
   }
 
+  Map<String, dynamic> getCard() => <String, dynamic>{
+        'number': _numberKey.currentState.value.toString(),
+        'holder_name': _nameFieldKey.currentState.value.toString(),
+        'expiry_month':
+            int.parse(_dateExpKey.currentState.value.toString().split('/')[0]),
+        'expiry_year': int.parse(
+            '20' + _dateExpKey.currentState.value.toString().split('/')[1]),
+        'cvc': _cvvKey.currentState.value.toString(),
+        'type': _cardBrand.toString(),
+      };
+
   void _dateExpFormatter() {
     var text = _dateExpController.text.replaceAll('/', '');
     if (text.length == 1) {
