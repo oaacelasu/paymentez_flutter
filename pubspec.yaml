@@ -5,7 +5,7 @@ author: Oscar Acelas
 homepage: https://github.com/oaacelasu/paymentez_flutter
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=1.00 <3.0.0"
 
 dependencies:
   flutter:
