@@ -27,7 +27,10 @@ class CardWidgetState extends State<CardWidget> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  var _numberIcon = Image.asset('packages_assets/card_generic.png');
+  var _numberIcon = Image.asset(
+    'packages_assets/card_generic.png',
+    package: 'paymentez_flutter',
+  );
   var _cardBrand = CardBrands.UNKNOWN;
 
   @override
@@ -46,27 +49,32 @@ class CardWidgetState extends State<CardWidget> {
           case CardBrands.MASTERCARD:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('packages_assets/card_mastercard.png');
+            _numberIcon = Image.asset('packages_assets/card_mastercard.png',
+                package: 'paymentez_flutter');
             break;
           case CardBrands.VISA:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('packages_assets/card_visa.png');
+            _numberIcon = Image.asset('packages_assets/card_visa.png',
+                package: 'paymentez_flutter');
             break;
           case CardBrands.AMERICAN_EXPRESS:
             _numberController.updateMask('0000 0000 0000 000');
             _cvvController.updateMask('0000');
-            _numberIcon = Image.asset('packages_assets/card_amex.png');
+            _numberIcon = Image.asset('packages_assets/card_amex.png',
+                package: 'paymentez_flutter');
             break;
           case CardBrands.DINERS_CLUB:
             _numberController.updateMask('0000 0000 0000 00');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('packages_assets/card_diners.png');
+            _numberIcon = Image.asset('packages_assets/card_diners.png',
+                package: 'paymentez_flutter');
             break;
           default:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('packages_assets/card_generic.png');
+            _numberIcon = Image.asset('packages_assets/card_generic.png',
+                package: 'paymentez_flutter');
             break;
         }
         _numberController.selection =
