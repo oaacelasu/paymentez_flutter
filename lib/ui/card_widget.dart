@@ -49,32 +49,32 @@ class CardWidgetState extends State<CardWidget> {
           case CardBrands.MASTERCARD:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('card_mastercard.png',
+            _numberIcon = Image.asset('assets/card_mastercard.png',
                 package: 'paymentez_flutter');
             break;
           case CardBrands.VISA:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('card_visa.png',
-                package: 'paymentez_flutter');
+            _numberIcon =
+                Image.asset('assets/card_visa.png', package: 'paymentez_flutter');
             break;
           case CardBrands.AMERICAN_EXPRESS:
             _numberController.updateMask('0000 0000 0000 000');
             _cvvController.updateMask('0000');
-            _numberIcon = Image.asset('card_amex.png',
-                package: 'paymentez_flutter');
+            _numberIcon =
+                Image.asset('assets/card_amex.png', package: 'paymentez_flutter');
             break;
           case CardBrands.DINERS_CLUB:
             _numberController.updateMask('0000 0000 0000 00');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('card_diners.png',
-                package: 'paymentez_flutter');
+            _numberIcon =
+                Image.asset('assets/card_diners.png', package: 'paymentez_flutter');
             break;
           default:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon = Image.asset('card_generic.png',
-                package: 'paymentez_flutter');
+            _numberIcon =
+                Image.asset('assets/card_generic.png', package: 'paymentez_flutter');
             break;
         }
         _numberController.selection =
