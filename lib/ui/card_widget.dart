@@ -27,10 +27,9 @@ class CardWidgetState extends State<CardWidget> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  var _numberIcon = Image.asset(
-    'card_generic.png',
-    package: 'paymentez_flutter',
-  );
+  var _numberIcon =  Image.asset('assets/card_generic.png',
+      package: 'paymentez_flutter');
+
   var _cardBrand = CardBrands.UNKNOWN;
 
   @override
@@ -55,26 +54,26 @@ class CardWidgetState extends State<CardWidget> {
           case CardBrands.VISA:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon =
-                Image.asset('assets/card_visa.png', package: 'paymentez_flutter');
+            _numberIcon = Image.asset('assets/card_visa.png',
+                package: 'paymentez_flutter');
             break;
           case CardBrands.AMERICAN_EXPRESS:
             _numberController.updateMask('0000 0000 0000 000');
             _cvvController.updateMask('0000');
-            _numberIcon =
-                Image.asset('assets/card_amex.png', package: 'paymentez_flutter');
+            _numberIcon = Image.asset('assets/card_amex.png',
+                package: 'paymentez_flutter');
             break;
           case CardBrands.DINERS_CLUB:
             _numberController.updateMask('0000 0000 0000 00');
             _cvvController.updateMask('000');
-            _numberIcon =
-                Image.asset('assets/card_diners.png', package: 'paymentez_flutter');
+            _numberIcon = Image.asset('assets/card_diners.png',
+                package: 'paymentez_flutter');
             break;
           default:
             _numberController.updateMask('0000 0000 0000 0000');
             _cvvController.updateMask('000');
-            _numberIcon =
-                Image.asset('assets/card_generic.png', package: 'paymentez_flutter');
+            _numberIcon = Image.asset('assets/card_generic.png',
+                package: 'paymentez_flutter');
             break;
         }
         _numberController.selection =
