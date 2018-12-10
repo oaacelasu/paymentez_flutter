@@ -205,6 +205,7 @@ class CardWidgetState extends State<CardWidget> {
                     validator: _validateName,
                     onFieldSubmitted: (v) {
                       FocusScope.of(context).requestFocus(_numberFocus);
+                      _validateName(v);
                     },
                   ),
                 ),
@@ -242,6 +243,7 @@ class CardWidgetState extends State<CardWidget> {
                     validator: _validateNumber,
                     onFieldSubmitted: (v) {
                       FocusScope.of(context).requestFocus(_dateExpFocus);
+                      _validateNumber(v);
                     },
                   ),
                 ),
@@ -270,6 +272,7 @@ class CardWidgetState extends State<CardWidget> {
                           validator: _validateDate,
                           onFieldSubmitted: (v) {
                             FocusScope.of(context).requestFocus(_cvvFocus);
+                            _validateDate(v);
                           },
                         ),
                       ),
@@ -293,6 +296,9 @@ class CardWidgetState extends State<CardWidget> {
                           controller: _cvvController,
                           keyboardType: TextInputType.number,
                           validator: _validateCVV,
+                          onFieldSubmitted: (v) {
+                            handleSubmitted();
+                          },
                         ),
                       ),
                     ),
