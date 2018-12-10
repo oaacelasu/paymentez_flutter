@@ -172,7 +172,7 @@ class CardWidgetState extends State<CardWidget> {
 
   String _validateCVV(String value) {
     if (value.length != _cvvController.mask.length)
-      return 'Ingresa un número de tarjeta de crédito válido';
+      return 'Ingresa un cvv válido';
     return null;
   }
 
@@ -204,8 +204,8 @@ class CardWidgetState extends State<CardWidget> {
                     maxLines: 1,
                     validator: _validateName,
                     onFieldSubmitted: (v) {
+                      _nameFieldKey.currentState.validate();
                       FocusScope.of(context).requestFocus(_numberFocus);
-                      _validateName(v);
                     },
                   ),
                 ),
@@ -242,8 +242,8 @@ class CardWidgetState extends State<CardWidget> {
                     keyboardType: TextInputType.number,
                     validator: _validateNumber,
                     onFieldSubmitted: (v) {
+                      _numberKey.currentState.validate();
                       FocusScope.of(context).requestFocus(_dateExpFocus);
-                      _validateNumber(v);
                     },
                   ),
                 ),
@@ -271,8 +271,8 @@ class CardWidgetState extends State<CardWidget> {
                           keyboardType: TextInputType.datetime,
                           validator: _validateDate,
                           onFieldSubmitted: (v) {
+                            _dateExpKey.currentState.validate();
                             FocusScope.of(context).requestFocus(_cvvFocus);
-                            _validateDate(v);
                           },
                         ),
                       ),
