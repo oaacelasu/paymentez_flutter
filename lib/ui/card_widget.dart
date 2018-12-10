@@ -27,10 +27,15 @@ class CardWidgetState extends State<CardWidget> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  var _numberIcon =  Image.asset('assets/card_generic.png',
-      package: 'paymentez_flutter');
+  var _numberIcon =
+      Image.asset('assets/card_generic.png', package: 'paymentez_flutter');
 
   var _cardBrand = CardBrands.UNKNOWN;
+
+  final _nameFocus = FocusNode();
+  final _numberFocus = FocusNode();
+  final _dateExpFocus = FocusNode();
+  final _cvvFocus = FocusNode();
 
   @override
   void initState() {
@@ -184,6 +189,8 @@ class CardWidgetState extends State<CardWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     key: _nameFieldKey,
+                    autofocus: true,
+                    textInputAction: TextInputAction.next,
                     style: Theme.of(context).textTheme.subhead,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -196,12 +203,17 @@ class CardWidgetState extends State<CardWidget> {
                     ),
                     maxLines: 1,
                     validator: _validateName,
+                    onFieldSubmitted: (v) {
+                      FocusScope.of(context).requestFocus(_numberFocus);
+                    },
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: new TextFormField(
                     key: _numberKey,
+                    focusNode: _numberFocus,
+                    textInputAction: TextInputAction.next,
                     style: Theme.of(context).textTheme.subhead,
                     autovalidate: _autovalidate,
                     decoration: InputDecoration(
@@ -228,6 +240,9 @@ class CardWidgetState extends State<CardWidget> {
                     controller: _numberController,
                     keyboardType: TextInputType.number,
                     validator: _validateNumber,
+                    onFieldSubmitted: (v) {
+                      FocusScope.of(context).requestFocus(_dateExpFocus);
+                    },
                   ),
                 ),
                 Row(
@@ -238,6 +253,8 @@ class CardWidgetState extends State<CardWidget> {
                         padding: const EdgeInsets.all(8.0),
                         child: new TextFormField(
                           key: _dateExpKey,
+                          focusNode: _dateExpFocus,
+                          textInputAction: TextInputAction.next,
                           style: Theme.of(context).textTheme.subhead,
                           autovalidate: _autovalidate,
                           decoration: InputDecoration(
@@ -251,6 +268,9 @@ class CardWidgetState extends State<CardWidget> {
                           controller: _dateExpController,
                           keyboardType: TextInputType.datetime,
                           validator: _validateDate,
+                          onFieldSubmitted: (v) {
+                            FocusScope.of(context).requestFocus(_cvvFocus);
+                          },
                         ),
                       ),
                     ),
@@ -260,6 +280,7 @@ class CardWidgetState extends State<CardWidget> {
                         padding: const EdgeInsets.all(8.0),
                         child: new TextFormField(
                           key: _cvvKey,
+                          focusNode: _cvvFocus,
                           autovalidate: _autovalidate,
                           style: Theme.of(context).textTheme.subhead,
                           decoration: InputDecoration(
