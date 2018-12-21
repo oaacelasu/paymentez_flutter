@@ -48,6 +48,7 @@ class CardWidgetState extends State<CardWidget> {
     _numberController.beforeChange = (String previous, String next) {
       setState(() {
         _cardBrand = PaymentezUtils.getCardBrand(next);
+        
         print(_cardBrand);
         switch (_cardBrand) {
           case CardBrands.MASTERCARD:
