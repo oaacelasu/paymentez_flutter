@@ -172,17 +172,15 @@ class CardWidgetState extends State<CardWidget> {
     print(d);
     if (value.isEmpty)
       return 'Escriba la fecha de vencimiento de su tarjeta';
-    else if (d != null && d.isAfter(new DateTime.now()))
+    if (d != null && d.isAfter(new DateTime.now()))
       return null;
-    else {
-      return 'Ingresa una fecha de vencimiento válida';
-    }
+    return 'Ingresa una fecha de vencimiento válida';
   }
 
   String _validateNumber(String value) {
-    if (_numberController.text.length < 10)
+    if (value.length < 10)
       return 'Ingresa un número de tarjeta de crédito válido';
-    else if (!PaymentezUtils.validateNumberCard(_numberController.text))
+    else if (!PaymentezUtils.validateNumberCard(value))
       return 'Ingresa un número de tarjeta de crédito válido';
     return null;
   }
