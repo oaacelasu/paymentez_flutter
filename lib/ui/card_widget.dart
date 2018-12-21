@@ -291,10 +291,7 @@ class CardWidgetState extends State<CardWidget> {
                             border: const OutlineInputBorder(),
                           ),
                           controller: _dateExpController,
-                          keyboardType: Theme.of(context).platform ==
-                                  TargetPlatform.android
-                              ? TextInputType.number
-                              : TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           validator: _validateDate,
                           onFieldSubmitted: (v) {
                             _dateExpKey.currentState.validate();
