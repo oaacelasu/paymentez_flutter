@@ -42,12 +42,10 @@ class CardWidgetState extends State<CardWidget> {
     // TODO: implement initState
     super.initState();
 
-    _dateExpController.beforeChange = (String previous, String next) => true;
-    _dateExpController.afterChange = (String masked, double raw) {
+    _dateExpController.afterChange = (String previous, String next) {
       _dateExpFormatter();
     };
-    _dateExpController.beforeChange = (String previous, String next) => true;
-    _numberController.afterChange = (String masked, double raw) {
+    _numberController.afterChange = (String previous, String next) {
       setState(() {
         _cardBrand = PaymentezUtils.getCardBrand(_numberController.text);
         print(_cardBrand);
