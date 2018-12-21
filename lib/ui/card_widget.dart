@@ -265,7 +265,7 @@ class CardWidgetState extends State<CardWidget> {
                     controller: _numberController,
                     keyboardType: TextInputType.number,
                     validator: _validateNumber,
-                    onEditingComplete: () {
+                    onFieldSubmitted: (v) {
                       _numberKey.currentState.validate();
                       FocusScope.of(context).requestFocus(_dateExpFocus);
                     },
@@ -318,10 +318,7 @@ class CardWidgetState extends State<CardWidget> {
                             border: const OutlineInputBorder(),
                           ),
                           controller: _cvvController,
-                          keyboardType: Theme.of(context).platform ==
-                                  TargetPlatform.android
-                              ? TextInputType.number
-                              : TextInputType.text,
+                          keyboardType: TextInputType.number,
                           validator: _validateCVV,
                           onFieldSubmitted: (v) {
                             handleSubmitted();
