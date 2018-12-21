@@ -143,10 +143,27 @@ class CardWidgetState extends State<CardWidget> {
     }
   }
 
+//  String _validateName(String value) {
+//    if (value.isEmpty) return 'Ingresa el nombre del titular de la tarjeta';
+//    final RegExp nameExp = new RegExp(r'^[A-Za-z ]+$');
+//    if (!nameExp.hasMatch(value)) return 'Ingresa un nombre valido';
+//    return null;
+//  }
+
   String _validateName(String value) {
     if (value.isEmpty) return 'Ingresa el nombre del titular de la tarjeta';
     final RegExp nameExp = new RegExp(r'^[A-Za-z ]+$');
-    if (!nameExp.hasMatch(value)) return 'Ingresa un nombre valido';
+    if (!nameExp.hasMatch(value
+        .replaceAll('á', 'a')
+        .replaceAll('é', 'e')
+        .replaceAll('í', 'i')
+        .replaceAll('ó', 'o')
+        .replaceAll('ú', 'u')
+        .replaceAll('Á', 'A')
+        .replaceAll('É', 'E')
+        .replaceAll('Ó', 'O')
+        .replaceAll('Í', 'I')
+        .replaceAll('Ú', 'U'))) return 'Ingresa un nombre valido';
     return null;
   }
 
