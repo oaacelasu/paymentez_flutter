@@ -42,6 +42,7 @@ class CardWidgetState extends State<CardWidget> {
     // TODO: implement initState
     super.initState();
 
+    _dateExpController.beforeChange = (String previous, String next) => true;
     _dateExpController.addListener(() {
       _dateExpFormatter();
     });
@@ -170,10 +171,8 @@ class CardWidgetState extends State<CardWidget> {
   String _validateDate(String value) {
     var d = _convertToDate(value);
     print(d);
-    if (value.isEmpty)
-      return 'Escriba la fecha de vencimiento de su tarjeta';
-    if (d != null && d.isAfter(new DateTime.now()))
-      return null;
+    if (value.isEmpty) return 'Escriba la fecha de vencimiento de su tarjeta';
+    if (d != null && d.isAfter(new DateTime.now())) return null;
     return 'Ingresa una fecha de vencimiento válida';
   }
 
