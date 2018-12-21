@@ -261,7 +261,7 @@ class CardWidgetState extends State<CardWidget> {
                             ? TextInputType.number
                             : TextInputType.text,
                     validator: _validateNumber,
-                    onFieldSubmitted: (v) {
+                    onEditingComplete: () {
                       _numberKey.currentState.validate();
                       FocusScope.of(context).requestFocus(_dateExpFocus);
                     },
