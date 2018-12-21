@@ -43,10 +43,11 @@ class CardWidgetState extends State<CardWidget> {
     super.initState();
 
     _dateExpController.beforeChange = (String previous, String next) => true;
-    _dateExpController.addListener(() {
+    _dateExpController.afterChange = (String masked, double raw) {
       _dateExpFormatter();
-    });
-    _numberController.addListener(() {
+    };
+    _dateExpController.beforeChange = (String previous, String next) => false;
+    _numberController.afterChange = (String masked, double raw) {
       setState(() {
         _cardBrand = PaymentezUtils.getCardBrand(_numberController.text);
         print(_cardBrand);
@@ -85,7 +86,7 @@ class CardWidgetState extends State<CardWidget> {
         _numberController.selection =
             new TextSelection.collapsed(offset: _numberController.text.length);
       });
-    });
+    };
   }
 
   bool _autovalidate = false;
@@ -253,10 +254,7 @@ class CardWidgetState extends State<CardWidget> {
                       border: const OutlineInputBorder(),
                     ),
                     controller: _numberController,
-                    keyboardType:
-                        Theme.of(context).platform == TargetPlatform.android
-                            ? TextInputType.number
-                            : TextInputType.text,
+                    keyboardType: TextInputType.number,
                     validator: _validateNumber,
                     onEditingComplete: () {
                       _numberKey.currentState.validate();
@@ -273,10 +271,7 @@ class CardWidgetState extends State<CardWidget> {
                         child: new TextFormField(
                           key: _dateExpKey,
                           focusNode: _dateExpFocus,
-                          textInputAction: Theme.of(context).platform ==
-                                  TargetPlatform.android
-                              ? TextInputAction.next
-                              : null,
+                          textInputAction: TextInputAction.next,
                           style: Theme.of(context).textTheme.subhead,
                           autovalidate: _autovalidate,
                           decoration: InputDecoration(
