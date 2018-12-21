@@ -231,10 +231,7 @@ class CardWidgetState extends State<CardWidget> {
                   child: new TextFormField(
                     key: _numberKey,
                     focusNode: _numberFocus,
-                    textInputAction:
-                        Theme.of(context).platform == TargetPlatform.android
-                            ? TextInputAction.next
-                            : null,
+                    textInputAction: TextInputAction.next,
                     style: Theme.of(context).textTheme.subhead,
                     autovalidate: _autovalidate,
                     decoration: InputDecoration(
@@ -259,7 +256,10 @@ class CardWidgetState extends State<CardWidget> {
                       border: const OutlineInputBorder(),
                     ),
                     controller: _numberController,
-                    keyboardType: TextInputType.number,
+                    keyboardType:
+                        Theme.of(context).platform == TargetPlatform.android
+                            ? TextInputType.number
+                            : TextInputType.text,
                     validator: _validateNumber,
                     onFieldSubmitted: (v) {
                       _numberKey.currentState.validate();
@@ -291,7 +291,10 @@ class CardWidgetState extends State<CardWidget> {
                             border: const OutlineInputBorder(),
                           ),
                           controller: _dateExpController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: Theme.of(context).platform ==
+                                  TargetPlatform.android
+                              ? TextInputType.number
+                              : TextInputType.text,
                           validator: _validateDate,
                           onFieldSubmitted: (v) {
                             _dateExpKey.currentState.validate();
@@ -308,7 +311,6 @@ class CardWidgetState extends State<CardWidget> {
                           key: _cvvKey,
                           focusNode: _cvvFocus,
                           autovalidate: _autovalidate,
-                          textInputAction: TextInputAction.done,
                           style: Theme.of(context).textTheme.subhead,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.https),
@@ -318,7 +320,10 @@ class CardWidgetState extends State<CardWidget> {
                             border: const OutlineInputBorder(),
                           ),
                           controller: _cvvController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: Theme.of(context).platform ==
+                                  TargetPlatform.android
+                              ? TextInputType.number
+                              : TextInputType.text,
                           validator: _validateCVV,
                           onFieldSubmitted: (v) {
                             handleSubmitted();
