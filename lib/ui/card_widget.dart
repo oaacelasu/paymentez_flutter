@@ -231,7 +231,10 @@ class CardWidgetState extends State<CardWidget> {
                   child: new TextFormField(
                     key: _numberKey,
                     focusNode: _numberFocus,
-                    textInputAction: TextInputAction.next,
+                    textInputAction:
+                        Theme.of(context).platform == TargetPlatform.android
+                            ? TextInputAction.next
+                            : null,
                     style: Theme.of(context).textTheme.subhead,
                     autovalidate: _autovalidate,
                     decoration: InputDecoration(
@@ -273,7 +276,10 @@ class CardWidgetState extends State<CardWidget> {
                         child: new TextFormField(
                           key: _dateExpKey,
                           focusNode: _dateExpFocus,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: Theme.of(context).platform ==
+                                  TargetPlatform.android
+                              ? TextInputAction.next
+                              : null,
                           style: Theme.of(context).textTheme.subhead,
                           autovalidate: _autovalidate,
                           decoration: InputDecoration(
@@ -285,7 +291,7 @@ class CardWidgetState extends State<CardWidget> {
                             border: const OutlineInputBorder(),
                           ),
                           controller: _dateExpController,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           validator: _validateDate,
                           onFieldSubmitted: (v) {
                             _dateExpKey.currentState.validate();
@@ -302,6 +308,7 @@ class CardWidgetState extends State<CardWidget> {
                           key: _cvvKey,
                           focusNode: _cvvFocus,
                           autovalidate: _autovalidate,
+                          textInputAction: TextInputAction.done,
                           style: Theme.of(context).textTheme.subhead,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.https),
