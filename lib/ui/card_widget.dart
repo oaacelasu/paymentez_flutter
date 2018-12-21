@@ -45,9 +45,9 @@ class CardWidgetState extends State<CardWidget> {
     _dateExpController.afterChange = (String previous, String next) {
       _dateExpFormatter();
     };
-    _numberController.afterChange = (String previous, String next) {
+    _numberController.beforeChange = (String previous, String next) {
       setState(() {
-        _cardBrand = PaymentezUtils.getCardBrand(_numberController.text);
+        _cardBrand = PaymentezUtils.getCardBrand(next);
         print(_cardBrand);
         switch (_cardBrand) {
           case CardBrands.MASTERCARD:
@@ -84,6 +84,7 @@ class CardWidgetState extends State<CardWidget> {
         _numberController.selection =
             new TextSelection.collapsed(offset: _numberController.text.length);
       });
+      return true;
     };
   }
 
@@ -110,13 +111,22 @@ class CardWidgetState extends State<CardWidget> {
   }
 
   Map<String, dynamic> getCard() => <String, dynamic>{
-        'number': _numberKey.currentState.value.toString(),
+        'number': _numberKey.currentState.value.toString().replaceAll(' ', ''),
         'holder_name': _nameFieldKey.currentState.value.toString(),
-        'expiry_month':
-            int.parse(_dateExpKey.currentState.value.toString().split('/')[0]),
+        'expiry_month': int.parse(
+          _dateExpKey.currentState.value
+              .toString()
+              .split('/')[0]
+              .replaceAll(' ', ''),
+        ),
         'expiry_year': int.parse(
-            '20' + _dateExpKey.currentState.value.toString().split('/')[1]),
-        'cvc': _cvvKey.currentState.value.toString(),
+          '20' +
+              _dateExpKey.currentState.value
+                  .toString()
+                  .split('/')[1]
+                  .replaceAll(' ', ''),
+        ),
+        'cvc': _cvvKey.currentState.value.toString().replaceAll(' ', ''),
         'type': _cardBrand.toString(),
       };
 
