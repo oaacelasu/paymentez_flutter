@@ -42,7 +42,7 @@ class CardWidgetState extends State<CardWidget> {
     // TODO: implement initState
     super.initState();
 
-    _dateExpController.beforeChange = (String previous, String next) {
+    _dateExpController.afterChange = (String previous, String next) {
       _dateExpFormatter();
     };
     _numberController.afterChange = (String previous, String next) {
@@ -139,8 +139,8 @@ class CardWidgetState extends State<CardWidget> {
       if (int.parse(text) > 12 || int.parse(text) == 0)
         _dateExpController.updateText(text[0]);
     }
-    _dateExpController.selection =
-        new TextSelection.collapsed(offset: _dateExpController.text.length);
+//    _dateExpController.selection =
+//        new TextSelection.collapsed(offset: _dateExpController.text.length);
   }
 
   DateTime _convertToDate(String input) {
