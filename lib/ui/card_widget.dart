@@ -259,7 +259,7 @@ class CardWidgetState extends State<CardWidget> {
                       border: const OutlineInputBorder(),
                     ),
                     controller: _numberController,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     validator: _validateNumber,
                     onFieldSubmitted: (v) {
                       _numberKey.currentState.validate();
