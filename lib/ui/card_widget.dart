@@ -82,8 +82,8 @@ class CardWidgetState extends State<CardWidget> {
                 package: 'paymentez_flutter');
             break;
         }
-        _numberController.selection =
-            new TextSelection.collapsed(offset: _numberController.text.length);
+//        _numberController.selection =
+//      new TextSelection.collapsed(offset: _numberController.text.length);
       });
       return true;
     };
