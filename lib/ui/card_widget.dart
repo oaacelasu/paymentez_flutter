@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:intl/intl.dart';
 import 'package:paymentez_flutter/paymentez_flutter.dart';
+import 'package:flutter_card_io/flutter_card_io.dart';
+import 'package:flutter/services.dart';
+
 
 class CardWidget extends StatefulWidget {
   CardWidget({Key key, this.title}) : super(key: key);
@@ -14,6 +17,63 @@ class CardWidget extends StatefulWidget {
 }
 
 class CardWidgetState extends State<CardWidget> {
+
+  Map<String, dynamic> _data = {};
+
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  _scanCard() async {
+    Map<String, dynamic> details;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      details = new Map<String, dynamic>.from(await FlutterCardIo.scanCard({
+        "requireExpiry": true,
+        "scanExpiry": true,
+        "requireCVV": false,
+        "requirePostalCode": false,
+        "restrictPostalCodeToNumericOnly": false,
+        "requireCardHolderName": false,
+        "hideCardIOLogo": true,
+        "useCardIOLogo": false,
+        "usePayPalActionbarIcon": false,
+        "suppressManualEntry": true,
+        "suppressConfirmation": true,
+        //"scanInstructions": "Ubica la cara frontal de tu tarjeta dentro de las guías y espera que el sistema capture la foto.",
+      }));
+
+    } on PlatformException {
+      print("Failed");
+      return;
+    }
+
+    if (details == null) {
+      print("Canceled");
+      return;
+    }
+
+    if (!mounted) return;
+
+
+
+    setState(() {
+      _data = details;
+      print(_data);
+      if(_data['cardNumber'] != null){
+        _numberController.updateText(_data['cardNumber']);
+      }
+      if(_data['expiryMonth'] != 0 && _data['expiryYear'] != 0){
+        //_dateExpController.updateText("" + _data['expiryMonth'].toString() + "/" + _data['expiryYear'].toString());
+      }
+
+      if(_data['cvv'] != null){
+        //_cvvController.updateText(_data['cvv']);
+      }
+
+    });
+  }
+
+
+
   MaskedTextController _numberController =
       new MaskedTextController(mask: '0000 0000 0000 0000');
   MaskedTextController _dateExpController =
@@ -223,7 +283,7 @@ class CardWidgetState extends State<CardWidget> {
                       hintText: 'Nombre del titular',
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 15.0),
-                      border: const OutlineInputBorder(),
+
                     ),
                     maxLines: 1,
                     validator: _validateName,
@@ -233,44 +293,67 @@ class CardWidgetState extends State<CardWidget> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: new TextFormField(
-                    key: _numberKey,
-                    focusNode: _numberFocus,
-                    textInputAction: TextInputAction.next,
-                    style: Theme.of(context).textTheme.subhead,
-                    autovalidate: _autovalidate,
-                    decoration: InputDecoration(
-                      prefixIcon: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
-                        child: _numberIcon,
-                        width: 20.0,
-                      ),
-                      suffixIcon: _numberController.text.length > 0
-                          ? IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                setState(() {
-                                  _numberController.updateText('');
-                                });
-                              },
-                            )
-                          : null,
-                      labelText: 'Número de tarjeta',
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 15.0),
-                      border: const OutlineInputBorder(),
-                    ),
-                    controller: _numberController,
-                    keyboardType: TextInputType.number,
-                    validator: _validateNumber,
-                    onEditingComplete: () {
-                      _numberKey.currentState.validate();
-                      FocusScope.of(context).requestFocus(_dateExpFocus);
-                    },
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:
+                Row(
+                  children: <Widget>[
+    Container( width: 31.5,
+      margin: EdgeInsets.symmetric(horizontal: 5.0),
+      height: 27.0, child: ConstrainedBox( constraints: BoxConstraints.expand(), child:
+                 Ink.image(
+                    image: AssetImage( 'assets/icon_camera.png', package: 'paymentez_flutter'),
+                    fit: BoxFit.fill,
+                    child: InkWell(
+                        onTap: _scanCard,
+                    child: null,
                   ),
+                )
+    ),),
+                    Expanded(
+                      flex: 1,
+                      child: new TextFormField(
+
+                        key: _numberKey,
+                        focusNode: _numberFocus,
+                        textInputAction: TextInputAction.next,
+                        style: Theme.of(context).textTheme.subhead,
+                        autovalidate: _autovalidate,
+
+                        decoration: InputDecoration(
+                          prefixIcon: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            child: _numberIcon,
+                            width: 20.0,
+                          ),
+                          suffixIcon: _numberController.text.length > 0
+                              ? IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              setState(() {
+                                _numberController.updateText('');
+                              });
+                            },
+                          )
+                              : null,
+                          labelText: 'Número de tarjeta',
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 15.0),
+
+                        ),
+                        controller: _numberController,
+                        keyboardType: TextInputType.number,
+                        validator: _validateNumber,
+                        onEditingComplete: () {
+                          _numberKey.currentState.validate();
+                          FocusScope.of(context).requestFocus(_dateExpFocus);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
+      ),
+
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -289,7 +372,7 @@ class CardWidgetState extends State<CardWidget> {
                             hintText: 'MM/AA',
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 15.0),
-                            border: const OutlineInputBorder(),
+
                           ),
                           controller: _dateExpController,
                           keyboardType: TextInputType.datetime,
@@ -315,7 +398,7 @@ class CardWidgetState extends State<CardWidget> {
                             labelText: 'CVV',
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 15.0),
-                            border: const OutlineInputBorder(),
+
                           ),
                           controller: _cvvController,
                           keyboardType: Theme.of(context).platform ==
