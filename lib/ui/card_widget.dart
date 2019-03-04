@@ -279,7 +279,7 @@ class CardWidgetState extends State<CardWidget> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
-                      labelText: 'Nombre del titular (igual que en la tarjeta)',
+                      labelText: 'Nombre del titular',
                       hintText: 'Nombre del titular',
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 15.0),
@@ -368,7 +368,7 @@ class CardWidgetState extends State<CardWidget> {
                           autovalidate: _autovalidate,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.calendar_today),
-                            labelText: 'Fecha de vto',
+                            labelText: 'MM/AA',
                             hintText: 'MM/AA',
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 15.0),
