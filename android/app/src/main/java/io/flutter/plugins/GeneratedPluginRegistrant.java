@@ -1,7 +1,6 @@
 package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
-import com.varunvairavan.fluttercardio.FlutterCardIoPlugin;
 
 /**
  * Generated file. Do not edit.
@@ -11,7 +10,6 @@ public final class GeneratedPluginRegistrant {
     if (alreadyRegisteredWith(registry)) {
       return;
     }
-    FlutterCardIoPlugin.registerWith(registry.registrarFor("com.varunvairavan.fluttercardio.FlutterCardIoPlugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {
