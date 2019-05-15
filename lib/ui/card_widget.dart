@@ -40,12 +40,10 @@ class CardWidgetState extends State<CardWidget> {
       }));
 
     } on PlatformException {
-      print("Failed");
       return;
     }
 
     if (details == null) {
-      print("Canceled");
       return;
     }
 
@@ -55,7 +53,6 @@ class CardWidgetState extends State<CardWidget> {
 
     setState(() {
       _data = details;
-      print(_data);
       if(_data['cardNumber'] != null){
         _numberController.updateText(_data['cardNumber']);
       }
@@ -106,7 +103,6 @@ class CardWidgetState extends State<CardWidget> {
       setState(() {
         _cardBrand = PaymentezUtils.getCardBrand(next);
 
-        print(_cardBrand);
         switch (_cardBrand) {
           case CardBrands.MASTERCARD:
             _numberController.updateMask('0000 0000 0000 0000');
@@ -202,7 +198,6 @@ class CardWidgetState extends State<CardWidget> {
 
   DateTime _convertToDate(String input) {
     try {
-      print(input.substring(0, 3) + '20' + input.substring(3));
       var d = new DateFormat.yM()
           .parseStrict(input.substring(0, 3) + '20' + input.substring(3));
       return d;
@@ -237,7 +232,6 @@ class CardWidgetState extends State<CardWidget> {
 
   String _validateDate(String value) {
     var d = _convertToDate(value);
-    print(d);
     if (value.isEmpty) return 'Escriba la fecha de vencimiento de su tarjeta';
     if (d != null && d.isAfter(new DateTime.now())) return null;
     return 'Ingresa una fecha de vencimiento válida';
