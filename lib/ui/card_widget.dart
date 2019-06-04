@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_card_io/flutter_card_io.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:intl/intl.dart';
 import 'package:paymentez_flutter/paymentez_flutter.dart';
-import 'package:flutter_card_io/flutter_card_io.dart';
 
 class CardWidget extends StatefulWidget {
   CardWidget({Key key, this.title}) : super(key: key);
@@ -35,7 +35,7 @@ class CardWidgetState extends State<CardWidget> {
         "usePayPalActionbarIcon": false,
         "suppressManualEntry": true,
         "suppressConfirmation": true,
-        //"scanInstructions": "Ubica la cara frontal de tu tarjeta dentro de las guías y espera que el sistema capture la foto.",
+        "scanInstructions": "Ubica la cara frontal de tu tarjeta dentro de las guías y espera que el sistema capture la foto.",
       }));
     } on PlatformException {
       return;
@@ -49,15 +49,16 @@ class CardWidgetState extends State<CardWidget> {
 
     setState(() {
       _data = details;
+      print(details);
       if (_data['cardNumber'] != null) {
         _numberController.updateText(_data['cardNumber']);
       }
       if (_data['expiryMonth'] != 0 && _data['expiryYear'] != 0) {
-        //_dateExpController.updateText("" + _data['expiryMonth'].toString() + "/" + _data['expiryYear'].toString());
+        _dateExpController.updateText("" + _data['expiryMonth'].toString() + "/" + _data['expiryYear'].toString());
       }
 
       if (_data['cvv'] != null) {
-        //_cvvController.updateText(_data['cvv']);
+        _cvvController.updateText(_data['cvv']);
       }
     });
   }
