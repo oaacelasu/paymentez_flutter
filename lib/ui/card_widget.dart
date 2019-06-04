@@ -20,7 +20,7 @@ class CardWidgetState extends State<CardWidget> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   _scanCard() async {
-    /*
+
     Map<String, dynamic> details;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
@@ -65,7 +65,7 @@ class CardWidgetState extends State<CardWidget> {
       }
 
     });
-    */
+
   }
 
   MaskedTextController _numberController =
@@ -287,22 +287,9 @@ class CardWidgetState extends State<CardWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
-//    Container( width: 31.5,
-//      margin: EdgeInsets.symmetric(horizontal: 5.0),
-//      height: 27.0, child: ConstrainedBox( constraints: BoxConstraints.expand(), child:
-//                 Ink.image(
-//                    image: AssetImage( 'assets/icon_camera.png', package: 'paymentez_flutter'),
-//                    fit: BoxFit.fill,
-//                    child: InkWell(
-//                        onTap: _scanCard,
-//                    child: null,
-//                  ),
-//                )
-//    ),),
-                      Container(
-                        height: 0.0,
-                        width: 0.0,
-                      ),
+    Container( width: 31.5,
+      margin: EdgeInsets.symmetric(horizontal: 5.0),
+      height: 27.0, child: InkWell(child: Icon(Icons.camera_alt), onTap: _scanCard,),),
                       Expanded(
                         flex: 1,
                         child: new TextFormField(
