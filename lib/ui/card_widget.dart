@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:intl/intl.dart';
 import 'package:paymentez_flutter/paymentez_flutter.dart';
-//import 'package:flutter_card_io/flutter_card_io.dart';
+import 'package:flutter_card_io/flutter_card_io.dart';
 
 class CardWidget extends StatefulWidget {
   CardWidget({Key key, this.title}) : super(key: key);
@@ -20,7 +20,6 @@ class CardWidgetState extends State<CardWidget> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   _scanCard() async {
-
     Map<String, dynamic> details;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
@@ -38,7 +37,6 @@ class CardWidgetState extends State<CardWidget> {
         "suppressConfirmation": true,
         //"scanInstructions": "Ubica la cara frontal de tu tarjeta dentro de las guías y espera que el sistema capture la foto.",
       }));
-
     } on PlatformException {
       return;
     }
@@ -49,23 +47,19 @@ class CardWidgetState extends State<CardWidget> {
 
     if (!mounted) return;
 
-
-
     setState(() {
       _data = details;
-      if(_data['cardNumber'] != null){
+      if (_data['cardNumber'] != null) {
         _numberController.updateText(_data['cardNumber']);
       }
-      if(_data['expiryMonth'] != 0 && _data['expiryYear'] != 0){
+      if (_data['expiryMonth'] != 0 && _data['expiryYear'] != 0) {
         //_dateExpController.updateText("" + _data['expiryMonth'].toString() + "/" + _data['expiryYear'].toString());
       }
 
-      if(_data['cvv'] != null){
+      if (_data['cvv'] != null) {
         //_cvvController.updateText(_data['cvv']);
       }
-
     });
-
   }
 
   MaskedTextController _numberController =
@@ -287,9 +281,15 @@ class CardWidgetState extends State<CardWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
-    Container( width: 31.5,
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
-      height: 27.0, child: InkWell(child: Icon(Icons.camera_alt), onTap: _scanCard,),),
+                      Container(
+                        width: 31.5,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        height: 27.0,
+                        child: InkWell(
+                          child: Icon(Icons.camera_alt),
+                          onTap: _scanCard,
+                        ),
+                      ),
                       Expanded(
                         flex: 1,
                         child: new TextFormField(
