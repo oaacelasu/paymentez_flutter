@@ -29,7 +29,7 @@ class CardWidgetState extends State<CardWidget> {
         "requireCVV": false,
         "requirePostalCode": false,
         "restrictPostalCodeToNumericOnly": false,
-        "requireCardHolderName": false,
+        "requireCardHolderName": true,
         "hideCardIOLogo": true,
         "useCardIOLogo": false,
         "usePayPalActionbarIcon": false,
@@ -58,7 +58,7 @@ class CardWidgetState extends State<CardWidget> {
         _dateExpController.updateText("" +
             _data['expiryMonth'].toString() +
             "/" +
-            _data['expiryYear'].toString());
+            _data['expiryYear'].substring(2).toString());
       }
 
       if (_data['cvv'] != null) {
