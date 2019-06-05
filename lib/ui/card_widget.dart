@@ -55,8 +55,7 @@ class CardWidgetState extends State<CardWidget> {
         _numberController.updateText(_data['cardNumber']);
       }
       if (_data['expiryMonth'] != 0 && _data['expiryYear'] != 0) {
-        _dateExpController.updateText("" +
-            _data['expiryMonth'].toString() +
+        _dateExpController.updateText("" + '00'.substring(_data['expiryMonth'].toString().length)+ _data['expiryMonth'].toString() +
             "/" +
             _data['expiryYear'].substring(2).toString());
       }
@@ -291,8 +290,8 @@ class CardWidgetState extends State<CardWidget> {
                         child: InkWell(
                           child: Container(
                               padding: EdgeInsets.all(10.0),
-                              child: Icon(Icons.camera_alt, size: 40.0,
-                                  color: Colors.black12)),
+                              child: Icon(Icons.camera_alt,
+                                  size: 40.0, color: Colors.black12)),
                           onTap: _scanCard,
                         ),
                       ),
