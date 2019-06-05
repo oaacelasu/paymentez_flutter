@@ -35,7 +35,8 @@ class CardWidgetState extends State<CardWidget> {
         "usePayPalActionbarIcon": false,
         "suppressManualEntry": true,
         "suppressConfirmation": true,
-        "scanInstructions": "Ubica la cara frontal de tu tarjeta dentro de las guías y espera que el sistema capture la foto.",
+        "scanInstructions":
+            "Ubica la cara frontal de tu tarjeta dentro de las guías y espera que el sistema capture la foto.",
       }));
     } on PlatformException {
       return;
@@ -54,7 +55,10 @@ class CardWidgetState extends State<CardWidget> {
         _numberController.updateText(_data['cardNumber']);
       }
       if (_data['expiryMonth'] != 0 && _data['expiryYear'] != 0) {
-        _dateExpController.updateText("" + _data['expiryMonth'].toString() + "/" + _data['expiryYear'].toString());
+        _dateExpController.updateText("" +
+            _data['expiryMonth'].toString() +
+            "/" +
+            _data['expiryYear'].toString());
       }
 
       if (_data['cvv'] != null) {
