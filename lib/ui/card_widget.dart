@@ -287,13 +287,11 @@ class CardWidgetState extends State<CardWidget> {
                   child: Row(
                     children: <Widget>[
                       Container(
-                        width: 31.5,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
-                        height: 27.0,
                         child: InkWell(
                           child: Container(
                               padding: EdgeInsets.all(10.0),
-                              child: Icon(Icons.camera_alt,
+                              child: Icon(Icons.camera_alt, size: 40.0,
                                   color: Colors.black12)),
                           onTap: _scanCard,
                         ),
