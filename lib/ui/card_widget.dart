@@ -294,7 +294,7 @@ class CardWidgetState extends State<CardWidget> {
                           child: Container(
                               padding: EdgeInsets.all(10.0),
                               child: Icon(Icons.camera_alt,
-                                  color: Colors.black45)),
+                                  color: Colors.black12)),
                           onTap: _scanCard,
                         ),
                       ),
