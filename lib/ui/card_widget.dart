@@ -291,7 +291,9 @@ class CardWidgetState extends State<CardWidget> {
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         height: 27.0,
                         child: InkWell(
-                          child: Icon(Icons.camera_alt),
+                          child: Container(
+                              padding: EdgeInsets.all(10.0),
+                              child: Icon(Icons.camera_alt, color: Colors.black45)),
                           onTap: _scanCard,
                         ),
                       ),
