@@ -24,20 +24,21 @@ class CardWidgetState extends State<CardWidget> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       details = new Map<String, dynamic>.from(await FlutterCardIo.scanCard({
-        "requireExpiry": true,
-        "scanExpiry": true,
-        "requireCVV": false,
-        "requirePostalCode": false,
-        "restrictPostalCodeToNumericOnly": false,
-        "requireCardHolderName": true,
-        "hideCardIOLogo": true,
-        "useCardIOLogo": false,
-        "usePayPalActionbarIcon": false,
-        "suppressManualEntry": true,
-        "suppressConfirmation": true,
-        "scanInstructions":
-            "Ubica la cara frontal de tu tarjeta dentro de las guías y espera que el sistema capture la foto.",
-      }));
+            "requireExpiry": true,
+            "scanExpiry": true,
+            "requireCVV": false,
+            "requirePostalCode": false,
+            "restrictPostalCodeToNumericOnly": false,
+            "requireCardHolderName": true,
+            "hideCardIOLogo": true,
+            "useCardIOLogo": false,
+            "usePayPalActionbarIcon": false,
+            "suppressManualEntry": true,
+            "suppressConfirmation": true,
+            "scanInstructions":
+                "Ubica la cara frontal de tu tarjeta\ndentro de las guías y espera que el sistema\ncapture la foto.",
+          }) ??
+          new Map());
     } on PlatformException {
       return;
     }
