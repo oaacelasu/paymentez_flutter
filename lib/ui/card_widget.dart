@@ -7,16 +7,19 @@ import 'package:intl/intl.dart';
 import 'package:paymentez_flutter/paymentez_flutter.dart';
 
 class CardWidget extends StatefulWidget {
-  CardWidget({Key key, this.title}) : super(key: key);
+  CardWidget({Key key, this.messages}) : super(key: key);
 
-  final String title;
+  final dynamic messages;
 
   @override
-  CardWidgetState createState() => new CardWidgetState();
+  CardWidgetState createState() => new CardWidgetState(messages);
 }
 
 class CardWidgetState extends State<CardWidget> {
   Map<String, dynamic> _data = {};
+  final dynamic messages;
+
+  CardWidgetState(this.messages);
 
   // Platform messages are asynchronous, so we initialize in an async method.
   _scanCard() async {
@@ -35,8 +38,7 @@ class CardWidgetState extends State<CardWidget> {
             "usePayPalActionbarIcon": false,
             "suppressManualEntry": true,
             "suppressConfirmation": true,
-            "scanInstructions":
-                "Ubica la cara frontal de tu tarjeta\ndentro de las guías y espera que el sistema\ncapture la foto.",
+            "scanInstructions": messages.paymentezAddCardMessage,
           }) ??
           new Map());
     } on PlatformException {
@@ -215,7 +217,7 @@ class CardWidgetState extends State<CardWidget> {
 //  }
 
   String _validateName(String value) {
-    if (value.isEmpty) return 'Ingresa el nombre del titular de la tarjeta';
+    if (value.isEmpty) return messages.paymentezAddCardPutName;
     final RegExp nameExp = new RegExp(r'^[A-Za-z ]+$');
     if (!nameExp.hasMatch(value
         .replaceAll('á', 'a')
@@ -227,28 +229,28 @@ class CardWidgetState extends State<CardWidget> {
         .replaceAll('É', 'E')
         .replaceAll('Ó', 'O')
         .replaceAll('Í', 'I')
-        .replaceAll('Ú', 'U'))) return 'Ingresa un nombre valido';
+        .replaceAll('Ú', 'U'))) return messages.paymentezAddCardCorrectName;
     return null;
   }
 
   String _validateDate(String value) {
     var d = _convertToDate(value);
-    if (value.isEmpty) return 'Escriba la fecha de vencimiento de su tarjeta';
+    if (value.isEmpty) return messages.paymentezAddCardPutExpDate;
     if (d != null && d.isAfter(new DateTime.now())) return null;
-    return 'Ingresa una fecha de vencimiento válida';
+    return messages.paymentezAddCardCorrectExpDate;
   }
 
   String _validateNumber(String value) {
     if (value.length < 10)
-      return 'Ingresa un número de tarjeta de crédito válido';
+      return messages.paymentezAddCardCorrectNumber;
     else if (!PaymentezUtils.validateNumberCard(value))
-      return 'Ingresa un número de tarjeta de crédito válido';
+      return messages.paymentezAddCardCorrectNumber;
     return null;
   }
 
   String _validateCVV(String value) {
     if (value.length != _cvvController.mask.length)
-      return 'Ingresa un cvv válido';
+      return messages.paymentezAddCardCorrectCvv;
     return null;
   }
 
@@ -271,8 +273,8 @@ class CardWidgetState extends State<CardWidget> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
-                      labelText: 'Nombre del titular',
-                      hintText: 'Nombre del titular',
+                      labelText: messages.paymentezAddCardName,
+                      hintText: messages.paymentezAddCardName,
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 15.0),
                     ),
@@ -320,7 +322,7 @@ class CardWidgetState extends State<CardWidget> {
                                     },
                                   )
                                 : null,
-                            labelText: 'Número de tarjeta',
+                            labelText: messages.paymentezAddCardNumber,
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 15.0),
                           ),
@@ -350,8 +352,8 @@ class CardWidgetState extends State<CardWidget> {
                           autovalidate: _autovalidate,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.calendar_today),
-                            labelText: 'MM/AA',
-                            hintText: 'MM/AA',
+                            labelText: messages.paymentezAddCardDate,
+                            hintText: messages.paymentezAddCardDate,
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 15.0),
                           ),
@@ -376,7 +378,7 @@ class CardWidgetState extends State<CardWidget> {
                           style: Theme.of(context).textTheme.subhead,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.https),
-                            labelText: 'CVV',
+                            labelText: messages.paymentezAddCardCvv,
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 15.0),
                           ),
