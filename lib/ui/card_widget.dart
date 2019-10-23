@@ -104,44 +104,44 @@ class CardWidgetState extends State<CardWidget> {
     };
     _numberController.afterChange = (String previous, String next) {
       setState(() {
-        _cardBrand = PaymentezUtils.getCardBrand(next);
+        var tmp = PaymentezUtils.getCardBrand(next);
 
-        switch (_cardBrand) {
-          case CardBrands.MASTERCARD:
-            _numberController.updateMask('0000 0000 0000 0000');
-            _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_mastercard.png',
-                package: 'paymentez_flutter');
-            break;
-          case CardBrands.VISA:
-            _numberController.updateMask('0000 0000 0000 0000');
-            _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_visa.png',
-                package: 'paymentez_flutter');
-            break;
-          case CardBrands.AMERICAN_EXPRESS:
-            _numberController.updateMask('0000 0000 0000 000');
-            _cvvController.updateMask('0000');
-            _numberIcon = Image.asset('assets/card_amex.png',
-                package: 'paymentez_flutter');
-            break;
-          case CardBrands.DINERS_CLUB:
-            _numberController.updateMask('0000 0000 0000 00');
-            _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_diners.png',
-                package: 'paymentez_flutter');
-            break;
-          default:
-            _numberController.updateMask('0000 0000 0000 0000');
-            _cvvController.updateMask('000');
-            _numberIcon = Image.asset('assets/card_generic.png',
-                package: 'paymentez_flutter');
-            break;
+        if (_cardBrand != tmp) {
+          _cardBrand = tmp;
+          switch (_cardBrand) {
+            case CardBrands.MASTERCARD:
+              _numberController.updateMask('0000 0000 0000 0000');
+              _cvvController.updateMask('000');
+              _numberIcon = Image.asset('assets/card_mastercard.png',
+                  package: 'paymentez_flutter');
+              break;
+            case CardBrands.VISA:
+              _numberController.updateMask('0000 0000 0000 0000');
+              _cvvController.updateMask('000');
+              _numberIcon = Image.asset('assets/card_visa.png',
+                  package: 'paymentez_flutter');
+              break;
+            case CardBrands.AMERICAN_EXPRESS:
+              _numberController.updateMask('0000 0000 0000 000');
+              _cvvController.updateMask('0000');
+              _numberIcon = Image.asset('assets/card_amex.png',
+                  package: 'paymentez_flutter');
+              break;
+            case CardBrands.DINERS_CLUB:
+              _numberController.updateMask('0000 0000 0000 00');
+              _cvvController.updateMask('000');
+              _numberIcon = Image.asset('assets/card_diners.png',
+                  package: 'paymentez_flutter');
+              break;
+            default:
+              _numberController.updateMask('0000 0000 0000 0000');
+              _cvvController.updateMask('000');
+              _numberIcon = Image.asset('assets/card_generic.png',
+                  package: 'paymentez_flutter');
+              break;
+          }
         }
-//        _numberController.selection =
-//      new TextSelection.collapsed(offset: _numberController.text.length);
       });
-      return true;
     };
   }
 
