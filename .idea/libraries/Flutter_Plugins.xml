@@ -1,6 +1,8 @@
 <component name="libraryTable">
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
-    <CLASSES />
+    <CLASSES>
+      <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/git/flutter_card_io-a3b6590abc5bea4fbe2335d63af4911b4cf6ab93" />
+    </CLASSES>
     <JAVADOC />
     <SOURCES />
   </library>
