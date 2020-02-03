@@ -37,10 +37,10 @@
             </list>
           </value>
         </entry>
-        <entry key="flutter_card_io">
+        <entry key="flutter_card_io_v2">
           <value>
             <list>
-              <option value="$USER_HOME$/Documents/flutter/.pub-cache/git/flutter_card_io-a3b6590abc5bea4fbe2335d63af4911b4cf6ab93/lib" />
+              <option value="$USER_HOME$/Documents/flutter/.pub-cache/git/flutter_card_io_v2-1fb9d479a6adf5f52655adc6d40198342e252239/lib" />
             </list>
           </value>
         </entry>
@@ -96,7 +96,7 @@
       </option>
     </properties>
     <CLASSES>
-      <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/git/flutter_card_io-a3b6590abc5bea4fbe2335d63af4911b4cf6ab93/lib" />
+      <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/git/flutter_card_io_v2-1fb9d479a6adf5f52655adc6d40198342e252239/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.2/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1/lib" />

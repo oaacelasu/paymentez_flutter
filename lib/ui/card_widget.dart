@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_card_io/flutter_card_io.dart';
+import 'package:flutter_card_io_v2/flutter_card_io_v2.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:intl/intl.dart';
 import 'package:paymentez_flutter/paymentez_flutter.dart';
@@ -26,7 +26,7 @@ class CardWidgetState extends State<CardWidget> {
     Map<String, dynamic> details;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      details = new Map<String, dynamic>.from(await FlutterCardIo.scanCard({
+      details = new Map<String, dynamic>.from(await FlutterCardIoV2.scanCard({
             "requireExpiry": true,
             "scanExpiry": true,
             "requireCVV": false,

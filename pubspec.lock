@@ -34,15 +34,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_card_io:
+  flutter_card_io_v2:
     dependency: "direct main"
     description:
       path: "."
       ref: master
-      resolved-ref: a3b6590abc5bea4fbe2335d63af4911b4cf6ab93
-      url: "git://github.com/oaacelasu/flutter_card_io.git"
+      resolved-ref: "1fb9d479a6adf5f52655adc6d40198342e252239"
+      url: "git://github.com/oaacelasu/flutter_card_io_v2.git"
     source: git
-    version: "0.0.3"
+    version: "0.0.1"
   flutter_masked_text:
     dependency: "direct main"
     description:

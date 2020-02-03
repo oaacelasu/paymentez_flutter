@@ -13,7 +13,7 @@ dependencies:
   flutter_masked_text: ^0.8.0
   intl: ^0.16.0
   crypto: ^2.1.4
-  flutter_card_io:
+  flutter_card_io_v2:
     git:
       url: git://github.com/oaacelasu/flutter_card_io_v2.git
       ref: master
