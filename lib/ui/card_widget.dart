@@ -57,7 +57,7 @@ class CardWidgetState extends State<CardWidget> {
       if (_data['cardNumber'] != null) {
         _numberController.updateText(_data['cardNumber']);
       }
-      if ((_data['expiryMonth']??0) != 0 && (_data['expiryYear']??0)!= 0) {
+      if ((_data['expiryMonth'] ?? 0) != 0 && (_data['expiryYear'] ?? 0) != 0) {
         _dateExpController.updateText("" +
             '00'.substring(_data['expiryMonth'].toString().length) +
             _data['expiryMonth'].toString() +

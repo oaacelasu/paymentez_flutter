@@ -1,6 +1,6 @@
 name: paymentez_flutter
 description: A new Flutter package for add cards to paymentez
-version: 0.0.3
+version: 0.0.4
 author: Oscar Acelas
 homepage: https://github.com/oaacelasu/paymentez_flutter
 
@@ -15,7 +15,7 @@ dependencies:
   crypto: ^2.1.4
   flutter_card_io:
     git:
-      url: git://github.com/oaacelasu/flutter_card_io.git
+      url: git://github.com/oaacelasu/flutter_card_io_v2.git
       ref: master
 
 
