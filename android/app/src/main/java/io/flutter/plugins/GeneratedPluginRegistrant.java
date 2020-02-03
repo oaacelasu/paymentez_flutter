@@ -1,7 +1,7 @@
 package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
-import com.varunvairavan.fluttercardio.FlutterCardIoPlugin;
+import paymentez.com.flutter_card_io_v2.FlutterCardIoV2Plugin;
 
 /**
  * Generated file. Do not edit.
@@ -11,7 +11,7 @@ public final class GeneratedPluginRegistrant {
     if (alreadyRegisteredWith(registry)) {
       return;
     }
-    FlutterCardIoPlugin.registerWith(registry.registrarFor("com.varunvairavan.fluttercardio.FlutterCardIoPlugin"));
+    FlutterCardIoV2Plugin.registerWith(registry.registrarFor("paymentez.com.flutter_card_io_v2.FlutterCardIoV2Plugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {
