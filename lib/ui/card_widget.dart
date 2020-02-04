@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_card_io/flutter_card_io.dart';
+import 'package:flutter_card_io_v2/flutter_card_io_v2.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:paymentez_flutter/paymentez_flutter.dart';
 
 class CardWidget extends StatefulWidget {
@@ -15,9 +16,13 @@ class CardWidget extends StatefulWidget {
   CardWidgetState createState() => new CardWidgetState(messages);
 }
 
-class CardWidgetState extends State<CardWidget> {
+class CardWidgetState extends State<CardWidget> with WidgetsBindingObserver{
   Map<String, dynamic> _data = {};
   final dynamic messages;
+  static const String nameDefaultMask = 'XXXXXXXXXXXXXXXXXXXXXXXXX';
+  static final Map<String, RegExp> nameFilter = {"X": RegExp(r'^[A-Za-z ]')};
+  static const String numberDefaultMask = 'XXXX XXXX XXXX XXXX';
+  static final Map<String, RegExp> numberFilter = {"X": RegExp(r'[0-9]')};
 
   CardWidgetState(this.messages);
 
@@ -26,7 +31,7 @@ class CardWidgetState extends State<CardWidget> {
     Map<String, dynamic> details;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      details = new Map<String, dynamic>.from(await FlutterCardIo.scanCard({
+      details = new Map<String, dynamic>.from(await FlutterCardIoV2.scanCard({
             "requireExpiry": true,
             "scanExpiry": true,
             "requireCVV": false,
@@ -51,30 +56,35 @@ class CardWidgetState extends State<CardWidget> {
 
     if (!mounted) return;
 
-    setState(() {
-      _data = details;
-      print(details);
-      if (_data['cardNumber'] != null) {
-        _numberController.updateText(_data['cardNumber']);
-      }
-      if (_data['expiryMonth'] != 0 && _data['expiryYear'] != 0) {
-        _dateExpController.updateText("" +
-            '00'.substring(_data['expiryMonth'].toString().length) +
-            _data['expiryMonth'].toString() +
-            "/" +
-            _data['expiryYear'].toString().substring(2));
-      }
-
-      if (_data['cvv'] != null) {
-        _cvvController.updateText(_data['cvv']);
-      }
-    });
+//    setState(() {
+//      _data = details;
+//      print(details);
+//      if (_data['cardNumber'] != null) {
+//        _numberController.updateText(_data['cardNumber']);
+//      }
+//      if ((_data['expiryMonth'] ?? 0) != 0 && (_data['expiryYear'] ?? 0) != 0) {
+//        _dateExpController.updateText("" +
+//            '00'.substring(_data['expiryMonth'].toString().length) +
+//            _data['expiryMonth'].toString() +
+//            "/" +
+//            _data['expiryYear'].toString().substring(2));
+//      }
+//
+//      if (_data['cvv'] != null) {
+//        _cvvController.updateText(_data['cvv']);
+//      }
+//    });
   }
+  final TextEditingController _nameController = TextEditingController();
 
-  MaskedTextController _numberController =
-      new MaskedTextController(mask: '0000 0000 0000 0000');
+  final TextEditingController _numberController = TextEditingController();
+  final MaskTextInputFormatter _nameMaskFormatter = MaskTextInputFormatter(mask: nameDefaultMask, filter: nameFilter);
+
+  final MaskTextInputFormatter _numberMaskFormatter = MaskTextInputFormatter(mask: numberDefaultMask, filter: numberFilter);
+
   MaskedTextController _dateExpController =
       new MaskedTextController(mask: '00/00');
+
   MaskedTextController _cvvController = new MaskedTextController(mask: '000');
   final GlobalKey<FormFieldState> _dateExpKey = new GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _numberKey = new GlobalKey<FormFieldState>();
@@ -94,55 +104,88 @@ class CardWidgetState extends State<CardWidget> {
   final _dateExpFocus = FocusNode();
   final _cvvFocus = FocusNode();
 
+  AppLifecycleState _notification;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      _notification = state;
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    _nameController.addListener( (){
+      if((_notification== AppLifecycleState.resumed)){
+        _notification = null;
+
+
+        _nameMaskFormatter.formatEditUpdate(_nameController.value, _nameMaskFormatter.lastResValue);
+        _nameController.value = _nameMaskFormatter.lastResValue;
+
+      }
+    });
 
     _dateExpController.afterChange = (String previous, String next) {
       _dateExpFormatter();
     };
-    _numberController.afterChange = (String previous, String next) {
-      setState(() {
-        var tmp = PaymentezUtils.getCardBrand(next);
 
+    _numberController.addListener( () {
+      if((_notification== AppLifecycleState.resumed)){
+        _notification = null;
+
+        var tmp = _numberController.value;
+        _numberController.value = _numberMaskFormatter.lastOldValue;
+        _numberMaskFormatter.formatEditUpdate(tmp, _numberMaskFormatter.lastOldValue);
+      }else
+      setState(() {
+        var tmp = PaymentezUtils.getCardBrand(_numberController.value.text);
         if (_cardBrand != tmp) {
           _cardBrand = tmp;
           switch (_cardBrand) {
             case CardBrands.MASTERCARD:
-              _numberController.updateMask('0000 0000 0000 0000');
-              _cvvController.updateMask('000');
+              _numberMaskFormatter.updateMask('XXXX XXXX XXXX XXXX');
+              _cvvController.updateMask('XXX');
               _numberIcon = Image.asset('assets/card_mastercard.png',
                   package: 'paymentez_flutter');
               break;
             case CardBrands.VISA:
-              _numberController.updateMask('0000 0000 0000 0000');
-              _cvvController.updateMask('000');
+              _numberMaskFormatter.updateMask('XXXX XXXX XXXX XXXX');
+              _cvvController.updateMask('XXX');
               _numberIcon = Image.asset('assets/card_visa.png',
                   package: 'paymentez_flutter');
               break;
             case CardBrands.AMERICAN_EXPRESS:
-              _numberController.updateMask('0000 0000 0000 000');
-              _cvvController.updateMask('0000');
+              _numberMaskFormatter.updateMask('XXXX XXXXXX XXXXX');
+              _cvvController.updateMask('XXX');
               _numberIcon = Image.asset('assets/card_amex.png',
                   package: 'paymentez_flutter');
               break;
             case CardBrands.DINERS_CLUB:
-              _numberController.updateMask('0000 0000 0000 00');
-              _cvvController.updateMask('000');
+              _numberMaskFormatter.updateMask('XXXX XXXX XXXX XX');
+              _cvvController.updateMask('XXX');
               _numberIcon = Image.asset('assets/card_diners.png',
                   package: 'paymentez_flutter');
               break;
             default:
-              _numberController.updateMask('0000 0000 0000 0000');
-              _cvvController.updateMask('000');
+              _numberMaskFormatter.updateMask('XXXX XXXX XXXX XXXX');
+              _cvvController.updateMask('XXX');
               _numberIcon = Image.asset('assets/card_generic.png',
                   package: 'paymentez_flutter');
               break;
           }
         }
       });
-    };
+    });
   }
 
   bool _autovalidate = false;
@@ -267,6 +310,8 @@ class CardWidgetState extends State<CardWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     key: _nameFieldKey,
+                    controller: _nameController,
+                    inputFormatters: [_nameMaskFormatter],
                     autofocus: true,
                     textInputAction: TextInputAction.next,
                     style: Theme.of(context).textTheme.subhead,
@@ -303,6 +348,7 @@ class CardWidgetState extends State<CardWidget> {
                         child: new TextFormField(
                           key: _numberKey,
                           focusNode: _numberFocus,
+                          inputFormatters: [_numberMaskFormatter],
                           textInputAction: TextInputAction.next,
                           style: Theme.of(context).textTheme.subhead,
                           autovalidate: _autovalidate,
@@ -317,7 +363,13 @@ class CardWidgetState extends State<CardWidget> {
                                     icon: Icon(Icons.clear),
                                     onPressed: () {
                                       setState(() {
-                                        _numberController.updateText('');
+                                        Future.delayed(Duration(milliseconds: 50))
+                                            .then((_) {
+
+                                          _numberMaskFormatter.formatEditUpdate(_numberController.value, TextEditingController().value);
+                                          _numberController.clear();
+
+                                        });
                                       });
                                     },
                                   )

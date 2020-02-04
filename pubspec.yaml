@@ -1,6 +1,6 @@
 name: paymentez_flutter
 description: A new Flutter package for add cards to paymentez
-version: 0.0.3
+version: 0.0.4
 author: Oscar Acelas
 homepage: https://github.com/oaacelasu/paymentez_flutter
 
@@ -11,25 +11,16 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_masked_text: ^0.8.0
-  intl: ^0.15.8
-  crypto: ^2.1.2
-#  flutter_card_io:
-#    path: ../flutter_card_io
-  flutter_card_io:
+  intl: ^0.16.0
+  crypto: ^2.1.4
+  mask_text_input_formatter: ^1.0.6
+  flutter_card_io_v2:
     git:
-      url: git://github.com/oaacelasu/flutter_card_io.git
+      url: git://github.com/oaacelasu/flutter_card_io_v2.git
       ref: master
 
 
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
 
 # To add assets to your package, add an assets section, like this:
