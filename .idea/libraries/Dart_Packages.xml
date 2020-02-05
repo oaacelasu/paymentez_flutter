@@ -58,13 +58,6 @@
             </list>
           </value>
         </entry>
-        <entry key="mask_text_input_formatter">
-          <value>
-            <list>
-              <option value="$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/mask_text_input_formatter-1.0.6/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="meta">
           <value>
             <list>
@@ -110,7 +103,6 @@
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.4/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_masked_text-0.8.0/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1/lib" />
-      <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/mask_text_input_formatter-1.0.6/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.1.8/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.6.4/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.1.6/lib" />
