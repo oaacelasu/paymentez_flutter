@@ -67,6 +67,7 @@ class PaymentezUtils {
     var issuerID = number.substring(0, number.length > 6 ? 6 : number.length);
     _CARDBRAND_IDENTIFIER_LIST.forEach((item) {
       if (item["RegExp"].hasMatch(issuerID)) {
+        if(issuer == CardBrands.UNKNOWN)
         issuer = item["CardBrands"];
       }
     });
